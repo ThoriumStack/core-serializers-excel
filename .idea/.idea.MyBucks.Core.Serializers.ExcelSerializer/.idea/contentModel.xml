@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Hannesv\.Rider2018.1\system\resharper-host\local\Transient\ReSharperHost\v12\SolutionCaches\_MyBucks.Core.Serializers.ExcelSerializer.95567834.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Hannesv\source\repos\MyBucks.Core.Serializers.ExcelSerializer" t="IncludeFlat">
+      <e p="MyBucks.Core.Serializers.ExcelSerializer" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Class1.cs" t="Include" />
+        <e p="MyBucks.Core.Serializers.ExcelSerializer.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="MyBucks.Core.Serializers.ExcelSerializer.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="MyBucks.Core.Serializers.ExcelSerializer.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
