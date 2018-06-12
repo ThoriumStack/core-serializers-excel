@@ -11,6 +11,7 @@
         <e p="ExcelExtensions.cs" t="Include" />
         <e p="ExcelSerializer.cs" t="Include" />
         <e p="MyBucks.Core.Serializers.ExcelSerializer.csproj" t="IncludeRecursive" />
+        <e p="NuGet.Config" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netstandard2.0" t="Include">
