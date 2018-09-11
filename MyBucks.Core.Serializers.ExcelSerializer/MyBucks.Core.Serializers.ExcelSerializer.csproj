@@ -4,6 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="4.5.2.1" />
-    <PackageReference Include="MyBucks.Core.DataIntegration" Version="1.0.17" />
+    <PackageReference Include="MyBucks.Core.DataIntegration" Version="1.0.21" />
   </ItemGroup>
 </Project>

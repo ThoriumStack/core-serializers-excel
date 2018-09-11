@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using MyBucks.Core.Serializers.ExcelSerializer.Attributes;
+using MyBucks.Core.DataIntegration.Attributes;
 
 namespace MyBucks.Core.Serializers.ExcelSerializer
 {
@@ -9,44 +10,44 @@ namespace MyBucks.Core.Serializers.ExcelSerializer
     {
         public static bool HeaderOnExcel(this PropertyInfo prop)
         {
-            var headerAttrib = (HeaderOnExcelAttribute[])
-                prop.GetCustomAttributes(typeof(HeaderOnExcelAttribute), false);
+            var headerAttrib = (ExcelColumnAttribute[])
+                prop.GetCustomAttributes(typeof(ExcelColumnAttribute), false);
 
-            return headerAttrib.Length > 0 && headerAttrib.First().Show;
+            return headerAttrib.Length > 0 && headerAttrib.First().ShowHeader;
         }
-        
+
         public static string GetSpreadSheetHeaderPosition(this PropertyInfo prop)
         {
-            var positions = (HeaderOnExcelAttribute[])
-                prop.GetCustomAttributes(typeof(HeaderOnExcelAttribute), false);
+            var positions = (ExcelColumnAttribute[])
+                prop.GetCustomAttributes(typeof(ExcelColumnAttribute), false);
 
             if (positions.Length == 0)
             {
                 return "A1";
             }
-            return positions[0].Position;
+            return positions[0].Column + positions[0].Row.ToString();
         }
 
         public static bool DataOnExcel(this PropertyInfo prop)
         {
-            var dataAttrib = (DataOnExcelAttribute[])
-                prop.GetCustomAttributes(typeof(DataOnExcelAttribute), false);
+            var dataAttrib = (ExcelColumnAttribute[])
+                prop.GetCustomAttributes(typeof(ExcelColumnAttribute), false);
 
-            return dataAttrib.Length > 0 && dataAttrib.First().Show;
+            return dataAttrib.Length > 0;
         }
 
-        public static string GetSpreadSheetDataStartPosition(this PropertyInfo prop)
+        public static String GetSpreadSheetDataStartPosition(this PropertyInfo prop)
         {
-            var positions = (DataOnExcelAttribute[])
-                prop.GetCustomAttributes(typeof(DataOnExcelAttribute), false);
+            var positions = (ExcelColumnAttribute[])
+                prop.GetCustomAttributes(typeof(ExcelColumnAttribute), false);
 
             if (positions.Length == 0)
             {
                 return "B1";
             }
-            return positions[0].Position;
+            return positions[0].Column + (positions[0].Row + 1).ToString();
         }
-        
+
         public static string GetDescription(this PropertyInfo prop)
         {
             var descriptions = (DescriptionAttribute[])

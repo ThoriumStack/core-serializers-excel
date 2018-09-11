@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using MyBucks.Core.DataIntegration.Interfaces;
 using OfficeOpenXml;
-using MyBucks.Core.Serializers.ExcelSerializer.Attributes;
+using MyBucks.Core.DataIntegration.Attributes;
 
 namespace MyBucks.Core.Serializers.ExcelSerializer
 {
@@ -118,7 +118,7 @@ namespace MyBucks.Core.Serializers.ExcelSerializer
         public IEnumerable<TData> GetData<TData>(MemoryStream rawData) where TData : new()
         {
             ExcelPackage excel = new ExcelPackage(rawData);
-            var workSheet = excel.Workbook.Worksheets[1];
+            var workSheet = excel.Workbook.Worksheets.First();
 
             var collection = ConvertSheetToObjects<TData>(workSheet);
 
@@ -150,7 +150,7 @@ namespace MyBucks.Core.Serializers.ExcelSerializer
             .Select(p => new
             {
                 Property = p,
-                Column = p.GetCustomAttributes<ExcelColumnAttribute>().First().ColumnIndex //safe because if where above
+                Column = p.GetCustomAttributes<ExcelColumnAttribute>().First().ColumnNumber //safe because if where above
             }).ToList();
 
 
@@ -188,6 +188,11 @@ namespace MyBucks.Core.Serializers.ExcelSerializer
                         if (col.Property.PropertyType == typeof(DateTime))
                         {
                             col.Property.SetValue(tnew, val.GetValue<DateTime>());
+                            return;
+                        }
+                        if (col.Property.PropertyType == typeof(decimal))
+                        {
+                            col.Property.SetValue(tnew, val.GetValue<decimal>());
                             return;
                         }
                         //Its a string
