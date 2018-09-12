@@ -11,53 +11,74 @@ namespace MyBucks.Core.Serializers.ExcelSerializer
 {
     public class ExcelSerializer : IIntegrationDataSerializer
     {
+        private MemoryStream _rawStream;
         public bool HasHeaderRecord { get; set; } = false;
 
         public bool AddDate { get; set; } = false;
 
         public string WorkSheetName { get; set; } = "Sheet1";
 
+        public ExcelSerializer()
+        {
+            _rawStream = new MemoryStream(); 
+        }
 
         public MemoryStream GenerateRawData<TData>(IEnumerable<TData> data)
         {
+            
             var outputMemoryStream = new MemoryStream();
-            using (var package = new ExcelPackage())
+            ExcelPackage package = null;
+            ExcelWorksheet dataWorksheet = null;
+
+            if (_rawStream.Length > 0)
             {
-                var dataWorksheet = package.Workbook.Worksheets.Add(WorkSheetName);
+                package = new ExcelPackage(_rawStream);
+                dataWorksheet = package.Workbook.Worksheets.FirstOrDefault();
+            }
+            else
+            {
+                package = new ExcelPackage();
+                dataWorksheet = package.Workbook.Worksheets.Add(WorkSheetName);
+            }
 
-                // Add a date to the worksheet (optional)
-                if (AddDate)
+
+            // Add a date to the worksheet (optional)
+            if (AddDate)
+            {
+                dataWorksheet.Cells["A1"].Value = "Date";
+                dataWorksheet.Cells["B1"].Value = DateTime.Now.ToString("dd.MM.yyyy");
+                dataWorksheet.Cells["A1:B1"].Style.Font.Bold = true;
+            }
+
+            //Add a header record to worksheet (optional)
+            if (HasHeaderRecord)
+            {
+                var headers = GetExcelHeaders(typeof(TData));
+
+                if (headers != null && headers.Count > 0)
                 {
-                    dataWorksheet.Cells["A1"].Value = "Date";
-                    dataWorksheet.Cells["B1"].Value = DateTime.Now.ToString("dd.MM.yyyy");
-                    dataWorksheet.Cells["A1:B1"].Style.Font.Bold = true;
-                }
-
-                //Add a header record to worksheet (optional)
-                if (HasHeaderRecord)
-                {
-                    var headers = GetExcelHeaders(typeof(TData));
-
-                    if (headers != null && headers.Count > 0)
+                    foreach (var header in headers)
                     {
-                        foreach (var header in headers)
-                        {
-                            dataWorksheet.Cells[header.Item1].Value = header.Item2;
-                            dataWorksheet.Cells[header.Item1].Style.Font.Bold = true;
-                        }
+                        dataWorksheet.Cells[header.Item1].Value = header.Item2;
+                        dataWorksheet.Cells[header.Item1].Style.Font.Bold = true;
                     }
                 }
-
-                //Add the data to the worksheet (compulsory)
-                var rows = GetExcelData<TData>(data);
-                
-                foreach (var row in rows)
-                {
-                    dataWorksheet.Cells[row.Item1].Value = row.Item2;
-                }
-
-                package.SaveAs(outputMemoryStream);
             }
+
+            //Add the data to the worksheet (compulsory)
+            var rows = GetExcelData<TData>(data);
+                
+            foreach (var row in rows)
+            {
+                dataWorksheet.Cells[row.Item1].Value = row.Item2;
+            }
+
+            package.SaveAs(outputMemoryStream);
+            package.Dispose();
+            outputMemoryStream.Position = 0;
+            _rawStream.Position = 0;
+            outputMemoryStream.CopyTo(_rawStream);
+
             return outputMemoryStream;
         }
 

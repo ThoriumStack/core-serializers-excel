@@ -45,7 +45,10 @@ namespace MyBucks.Core.Serializers.ExcelSerializer
             {
                 return "B1";
             }
-            return positions[0].Column + (positions[0].Row + 1).ToString();
+            if (positions[0].ShowHeader)
+                return positions[0].Column + (positions[0].Row + 1).ToString();
+            else
+                return positions[0].Column + (positions[0].Row).ToString();
         }
 
         public static string GetDescription(this PropertyInfo prop)
