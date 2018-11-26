@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using MyBucks.Core.DataIntegration.Attributes;
+using Thorium.Core.DataIntegration.Attributes;
 
-namespace MyBucks.Core.Serializers.ExcelSerializer
+namespace Thorium.Core.Serializers.ExcelSerializer
 {
     public static class ExcelExtensions
     {

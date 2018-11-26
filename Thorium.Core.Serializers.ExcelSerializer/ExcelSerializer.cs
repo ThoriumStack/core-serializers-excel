@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using MyBucks.Core.DataIntegration.Interfaces;
 using OfficeOpenXml;
-using MyBucks.Core.DataIntegration.Attributes;
+using Thorium.Core.DataIntegration.Attributes;
+using Thorium.Core.DataIntegration.Interfaces;
 
-namespace MyBucks.Core.Serializers.ExcelSerializer
+namespace Thorium.Core.Serializers.ExcelSerializer
 {
     public class ExcelSerializer : IIntegrationDataSerializer
     {

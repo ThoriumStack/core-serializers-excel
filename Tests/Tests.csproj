@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MyBucks.Core.Serializers.ExcelSerializer\MyBucks.Core.Serializers.ExcelSerializer.csproj" />
+      <ProjectReference Include="..\Thorium.Core.Serializers.ExcelSerializer\Thorium.Core.Serializers.ExcelSerializer.csproj" />
     </ItemGroup>
 
 </Project>

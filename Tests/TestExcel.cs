@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xunit;
-using MyBucks.Core.Serializers.ExcelSerializer;
-using MyBucks.Core.DataIntegration.Attributes;
-using MyBucks.Core.DataIntegration.Transports;
+using Thorium.Core.Serializers.ExcelSerializer;
+using Thorium.Core.DataIntegration.Attributes;
+using Thorium.Core.DataIntegration.Transports;
 using System.IO;
 using System.Linq;
-using MyBucks.Core.DataIntegration;
+using Thorium.Core.DataIntegration;
 
 namespace Tests
 {
